@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,6 +47,7 @@ THIRD_PARTY_APPS = [
 
 MY_APPS = [
     "users",
+    "core",
 ]
 
 INSTALLED_APPS = MY_APPS + DJANGO_APPS + THIRD_PARTY_APPS
@@ -135,3 +137,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Model de usuário padrão
 AUTH_USER_MODEL = "users.User"
+
+# Configuração dos uploads
+# https://www.delftstack.com/pt/howto/django/django-upload-file-or-image/#preencha-o-formulário-com-um-título-selecione-um-arquivo-e-envie-o-formulário
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
