@@ -48,6 +48,7 @@ THIRD_PARTY_APPS = [
 MY_APPS = [
     "users",
     "core",
+    "transactions",
 ]
 
 INSTALLED_APPS = MY_APPS + DJANGO_APPS + THIRD_PARTY_APPS
@@ -140,6 +141,5 @@ AUTH_USER_MODEL = "users.User"
 
 # Configuração dos uploads
 # https://www.delftstack.com/pt/howto/django/django-upload-file-or-image/#preencha-o-formulário-com-um-título-selecione-um-arquivo-e-envie-o-formulário
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
