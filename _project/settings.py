@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import dotenv
+import environ
+from pathlib import Path
+
+env = environ.Env(DEBUG=(bool, False))
+dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-k!c-y^q@%!*-%dn9p8gxy)2lc#$&09zfa1kp3zq5qbdo43g&^6"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,13 +92,26 @@ WSGI_APPLICATION = "_project.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+# configuração personalizada do DB
 
-DATABASES = {
-    "default": {
+default_db = (
+    {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
-}
+    if os.getenv("TEST")
+    else {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRES_DB_NAME"),
+        "USER": os.getenv("POSTGRES_USERNAME"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("HOST"),
+        "PORT": os.getenv("POSTGRES_PORT"),
+    }
+)
+
+DATABASES = {"default": default_db}
+
 
 
 # Password validation
@@ -143,3 +162,7 @@ AUTH_USER_MODEL = "users.User"
 # https://www.delftstack.com/pt/howto/django/django-upload-file-or-image/#preencha-o-formulário-com-um-título-selecione-um-arquivo-e-envie-o-formulário
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+#configuração para db default
+
+
