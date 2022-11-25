@@ -3,8 +3,6 @@ from .models import Transaction
 from users.models import User
 
 
-
-
 class TransactionSerializer(serializers.ModelSerializer):
 
     id = serializers.UUIDField(read_only=True)

@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Document
-from transactions.models import Transaction
 from datetime import date, time
 from users.models import User
 from utils.services import user_get_or_created, import_transactions_from_file
@@ -54,15 +53,15 @@ class UploadSerializer(serializers.ModelSerializer):
                     values_transactions = transactions.transactions.values()
                     type_transaction = [2, 3, 9]
 
-                    for balance in values_transactions:       
-                        value = float(balance['valor'])                 
-                        if balance['tipo'] in type_transaction:
+                    for balance in values_transactions:
+                        value = float(balance["valor"])
+                        if balance["tipo"] in type_transaction:
                             data_saldo_actually -= value
                         else:
                             data_saldo_actually += value
-                    
+
                     data_saldo = data_saldo_actually
-                    
+
                     if data_tipo in type_transaction:
                         data_saldo -= data_valor
                     else:

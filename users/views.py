@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .models import User
-from .serializers import UserSerializer, UserTransactionSerializer
+from .serializers import UserSerializer
 from utils.mixins import SerializerByMethodMixin
 
 # Create your views here.
@@ -14,5 +14,3 @@ class CreateUserView(SerializerByMethodMixin, generics.ListCreateAPIView):
         "POST": UserSerializer,
         "GET": UserSerializer,
     }
-
-

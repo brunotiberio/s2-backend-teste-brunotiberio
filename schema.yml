@@ -1,0 +1,425 @@
+openapi: 3.0.3
+info:
+  title: Teste Técnico S2
+  version: 1.0.0
+  description: API usado para import de arquivo
+paths:
+  /api/import/:
+    get:
+      operationId: import_list
+      tags:
+      - import
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Upload'
+          description: ''
+    post:
+      operationId: import_create
+      tags:
+      - import
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Upload'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Upload'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Upload'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Upload'
+          description: ''
+  /api/login/:
+    post:
+      operationId: login_create
+      tags:
+      - login
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /api/transaction/:
+    get:
+      operationId: transaction_list
+      tags:
+      - transaction
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserTransaction'
+          description: ''
+    post:
+      operationId: transaction_create
+      tags:
+      - transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Transaction'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+          description: ''
+  /api/transaction/{cpf}/:
+    get:
+      operationId: transaction_list_2
+      parameters:
+      - in: path
+        name: cpf
+        schema:
+          type: string
+        required: true
+      tags:
+      - transaction
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionsCPFDetail'
+          description: ''
+  /api/user/:
+    get:
+      operationId: user_list
+      tags:
+      - user
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+    post:
+      operationId: user_create
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+components:
+  schemas:
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        tipo:
+          type: integer
+        data:
+          type: string
+          format: date
+        valor:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        cartao:
+          type: string
+          maxLength: 12
+        hora:
+          type: string
+          format: time
+        dono_da_loja:
+          type: string
+          maxLength: 14
+        nome_da_loja:
+          type: string
+          maxLength: 19
+        saldo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        cpf:
+          type: string
+          maxLength: 11
+        user:
+          type: string
+          format: uuid
+      required:
+      - cartao
+      - cpf
+      - data
+      - dono_da_loja
+      - hora
+      - id
+      - nome_da_loja
+      - tipo
+      - user
+      - valor
+    TransactionsCPFDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        cpf:
+          type: string
+          readOnly: true
+        dono_da_loja:
+          type: string
+          readOnly: true
+        nome_da_loja:
+          type: string
+          readOnly: true
+        tipo:
+          type: integer
+          readOnly: true
+        valor:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          readOnly: true
+        cartao:
+          type: string
+          readOnly: true
+        data:
+          type: string
+          format: date
+          readOnly: true
+        hora:
+          type: string
+          format: time
+          readOnly: true
+        saldo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          readOnly: true
+        user:
+          type: string
+          format: uuid
+          readOnly: true
+      required:
+      - cartao
+      - cpf
+      - data
+      - dono_da_loja
+      - hora
+      - id
+      - nome_da_loja
+      - saldo
+      - tipo
+      - user
+      - valor
+    Upload:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        uploadedFile:
+          type: string
+          format: uri
+        title:
+          type: string
+          maxLength: 200
+        dateTimeOfUpload:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - dateTimeOfUpload
+      - id
+      - title
+      - uploadedFile
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 30
+        first_name:
+          type: string
+          maxLength: 90
+        last_name:
+          type: string
+          maxLength: 120
+        cpf:
+          type: string
+          maxLength: 11
+        loja:
+          type: string
+          maxLength: 256
+        transactions:
+          type: array
+          items:
+            type: string
+            format: uuid
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 256
+        saldo:
+          type: number
+          format: double
+      required:
+      - cpf
+      - first_name
+      - id
+      - last_name
+      - password
+      - transactions
+      - username
+    UserTransaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        tipo:
+          type: integer
+        data:
+          type: string
+          format: date
+        hora:
+          type: string
+          format: time
+        cartao:
+          type: string
+          maxLength: 12
+        user:
+          type: string
+          format: uuid
+        valor:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+        saldo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+      required:
+      - cartao
+      - data
+      - hora
+      - id
+      - tipo
+      - user
+      - valor
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
