@@ -6,7 +6,7 @@ def user_get_or_created(cpf_user, data_nome_dono, data_cpf, data_nome_loja, sald
 
     user = User.objects.filter(cpf=cpf_user)
 
-    if len(user) == 0:   
+    if len(user) == 0:
         user_created = User.objects.create_user(
             username=data_nome_dono[0].lower(),
             password=data_cpf,
@@ -48,7 +48,7 @@ def import_transactions_from_file(
             "nome_da_loja": " ".join(data_nome_loja),
             "saldo": data_saldo,
             "user": user,
-            'cpf': cpf,
+            "cpf": cpf,
         }
     )
 

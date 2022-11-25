@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
             "loja",
             "transactions",
             "password",
-            'saldo',
+            "saldo",
         ]
 
         read_only_fields = ["id", "is_superuser", "transactions"]

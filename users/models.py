@@ -13,7 +13,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=90)
     last_name = models.CharField(max_length=120)
     cpf = models.CharField(max_length=11)
-    loja = models.CharField(max_length=256, default='administrador')
+    loja = models.CharField(max_length=256, default="administrador")
     saldo = models.FloatField(default=0.00)
 
     REQUIRED_FIELDS = ["first_name", "last_name", "password", "cpf"]
