@@ -79,12 +79,6 @@ Clone o projeto em sua máquina local e instale o ambiente virtual VENV:
 python -m venv venv
 ```
 
-Após a instação, ative o ambiente virtual com o seguinte comando:
-
-```shell (Linux)
-python -m venv venv
-```
-
 ### 3.2. Variáveis de ambiente
 
 [ Voltar ao topo ](#sumário)
