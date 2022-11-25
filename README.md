@@ -89,6 +89,8 @@ Crie um arquivo **.env** no diretório raiz do projeto, copiando o exemplo do **
 cp .env.example .env
 ```
 
+No **.env** defina a variável **SECRET_KEY** com o valor de uma secret_key (você pode usar um site gerador de secret_key ou escrever qualquer coisa) para que as requisições funcionem.
+
 #### 3.2.1 Definindo banco de dados a ser usado
 
 ##### 3.2.1.1 Banco recomendado para testes (sqlite3)
